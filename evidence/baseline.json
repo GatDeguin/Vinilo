@@ -1,0 +1,63 @@
+{
+  "mode": "baseline",
+  "browser": "144.0.7559.96",
+  "viewport": "1280x960",
+  "gpu": "SwiftShader software, headed Chromium under Xvfb",
+  "origin": "opaque set_content; HTTP blocked by browser administrator",
+  "errors": [],
+  "tests": [
+    {
+      "name": "no persistent RAF callbacks at idle",
+      "status": "fail",
+      "error": "{'callbacks': 288, 'pending': 2, 'windowSeconds': 1.203}"
+    },
+    {
+      "name": "second valid intent mounts immediately without animation lock",
+      "status": "fail",
+      "error": "{'selected': {'kind': 'demo', 'id': 'luz-de-tarde', 'title': 'Luz de tarde', 'artist': 'Estudio SURCO · jazz de sobremesa', 'addedAt': 1791767977774, 'fetchedAt': 1791767977774, 'art': 0}, 'stage': 'extracted', 'playing': False, 'ready': False, 'busy': True, 'tab': 'studio', 'saved': 0, 'results': 0, 'current': 0, 'duration': 0, 'apiConnected': False, 'renderer': 'WebGL2', 'drawCalls': 58, 'reduced': False}"
+    },
+    {
+      "name": "switch to reduced motion settles an in-flight transition",
+      "status": "fail",
+      "error": "{'selected': {'kind': 'demo', 'id': 'luz-de-tarde', 'title': 'Luz de tarde', 'artist': 'Estudio SURCO · jazz de sobremesa', 'addedAt': 1791767977774, 'fetchedAt': 1791767977774, 'art': 0}, 'stage': 'extracted', 'playing': False, 'ready': False, 'busy': True, 'tab': 'studio', 'saved': 0, 'results': 0, 'current': 0, 'duration': 0, 'apiConnected': False, 'renderer': 'WebGL2', 'drawCalls': 58, 'reduced': False}"
+    },
+    {
+      "name": "system motion preference changes in both directions",
+      "status": "pass"
+    },
+    {
+      "name": "selection preserves card DOM identity and keyboard focus",
+      "status": "fail",
+      "error": "assertion failed"
+    }
+  ],
+  "idle": {
+    "callbacks": 288,
+    "pending": 2,
+    "windowSeconds": 1.203
+  },
+  "snapshot": {
+    "selected": {
+      "kind": "demo",
+      "id": "hora-azul",
+      "title": "La hora azul",
+      "artist": "Estudio SURCO · after hours",
+      "addedAt": 1791767977774,
+      "fetchedAt": 1791767977774,
+      "art": 1
+    },
+    "stage": "sleeved",
+    "playing": false,
+    "ready": false,
+    "busy": false,
+    "tab": "studio",
+    "saved": 0,
+    "results": 0,
+    "current": 0,
+    "duration": 0,
+    "apiConnected": false,
+    "renderer": "WebGL2",
+    "drawCalls": 58,
+    "reduced": false
+  }
+}

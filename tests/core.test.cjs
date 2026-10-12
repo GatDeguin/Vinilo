@@ -1,0 +1,16 @@
+const {test} = require('node:test');
+const assert = require('node:assert/strict');
+let C={};try{C=require('../src/core.js')}catch{}
+test('validates official video URL forms only',()=>{
+ assert.equal(typeof C.parseVideoId,'function');
+ for (const x of ['dQw4w9WgXcQ','https://youtu.be/dQw4w9WgXcQ?t=3','https://www.youtube.com/watch?v=dQw4w9WgXcQ','https://youtube.com/shorts/dQw4w9WgXcQ','https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ']) assert.equal(C.parseVideoId(x),'dQw4w9WgXcQ');
+ for (const x of ['javascript:alert(1)','https://youtube.com.evil.test/watch?v=dQw4w9WgXcQ','https://evil.test/youtube.com/watch?v=dQw4w9WgXcQ','https://youtube.com/playlist?list=xyz','https://youtube.com/@abc','bad']) assert.equal(C.parseVideoId(x),null);
+});
+test('time formatting handles live/invalid values',()=>{assert.equal(typeof C.formatTime,'function');assert.equal(C.formatTime(61),'1:01');assert.equal(C.formatTime(3602),'1:00:02');assert.equal(C.formatTime(NaN),'0:00');assert.equal(C.formatTime(-3),'0:00');});
+test('records normalized without arbitrary URLs or keys',()=>{assert.equal(typeof C.normalizeRecord,'function');const r=C.normalizeRecord({id:'dQw4w9WgXcQ',kind:'youtube',title:'Video',artist:'Canal',key:'secret',thumb:'javascript:alert(1)'});assert.equal(r.id,'dQw4w9WgXcQ');assert.ok(!('key'in r));assert.ok(!('thumb'in r));assert.throws(()=>C.normalizeRecord({kind:'youtube',id:'<script>'}));assert.throws(()=>C.normalizeRecord({kind:'evil',id:'abc'}));});
+test('backup version and size bounds',()=>{assert.equal(typeof C.validateBackup,'function');assert.throws(()=>C.validateBackup({schema:99,records:[]}));assert.throws(()=>C.validateBackup({schema:1,app:'SURCO',records:new Array(151).fill({})}));assert.deepEqual(C.validateBackup({app:'SURCO',schema:1,records:[]}),[]);});
+test('record duplicates collapse with newest first',()=>{assert.equal(typeof C.uniqueRecords,'function');assert.equal(C.uniqueRecords([{kind:'demo',id:'a'},{kind:'demo',id:'a'}]).length,1)});
+test('strict transitions reject impossible physical moves',()=>{assert.equal(typeof C.canTransition,'function');assert.equal(C.canTransition('sleeved','extracted'),true);assert.equal(C.canTransition('sleeved','playing'),false);assert.equal(C.canTransition('extracted','mounted'),true);assert.equal(C.canTransition('mounted','sleeved'),true);});
+test('portable audio is validated and retained',()=>{const b={app:'SURCO',schema:1,records:[{kind:'local',id:'f-test',title:'Audio',mime:'audio/wav',audio:'data:audio/wav;base64,AAAA'}]};assert.equal(C.validateBackup(b)[0].audio,b.records[0].audio);assert.throws(()=>C.validateBackup({...b,records:[{...b.records[0],audio:'data:audio/wav;base64,A'}]}));assert.throws(()=>C.validateBackup({...b,records:[{...b.records[0],audio:'data:text/html;base64,AAAA'}]}));});
+test('unsupported base64 and unknown schema never normalize silently',()=>{for(const b of [null,{},[],{app:'NOT-SURCO',schema:1,records:[]}])assert.throws(()=>C.validateBackup(b));});
+test('all supported video domains parse consistently',()=>{for(const h of ['www.youtube.com','m.youtube.com','music.youtube.com','youtube.com'])assert.equal(C.parseVideoId('https://'+h+'/watch?v=dQw4w9WgXcQ&list=ignored'),'dQw4w9WgXcQ');assert.equal(C.parseVideoId('https://youtube.com@attacker.test/watch?v=dQw4w9WgXcQ'),null);});

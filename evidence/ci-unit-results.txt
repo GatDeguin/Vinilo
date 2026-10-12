@@ -1,0 +1,130 @@
+TAP version 13
+# Subtest: validates official video URL forms only
+ok 1 - validates official video URL forms only
+  ---
+  duration_ms: 1.613765
+  type: 'test'
+  ...
+# Subtest: time formatting handles live/invalid values
+ok 2 - time formatting handles live/invalid values
+  ---
+  duration_ms: 0.269058
+  type: 'test'
+  ...
+# Subtest: records normalized without arbitrary URLs or keys
+ok 3 - records normalized without arbitrary URLs or keys
+  ---
+  duration_ms: 0.523188
+  type: 'test'
+  ...
+# Subtest: backup version and size bounds
+ok 4 - backup version and size bounds
+  ---
+  duration_ms: 0.867657
+  type: 'test'
+  ...
+# Subtest: record duplicates collapse with newest first
+ok 5 - record duplicates collapse with newest first
+  ---
+  duration_ms: 0.243299
+  type: 'test'
+  ...
+# Subtest: strict transitions reject impossible physical moves
+ok 6 - strict transitions reject impossible physical moves
+  ---
+  duration_ms: 1.047617
+  type: 'test'
+  ...
+# Subtest: portable audio is validated and retained
+ok 7 - portable audio is validated and retained
+  ---
+  duration_ms: 0.597648
+  type: 'test'
+  ...
+# Subtest: unsupported base64 and unknown schema never normalize silently
+ok 8 - unsupported base64 and unknown schema never normalize silently
+  ---
+  duration_ms: 0.251686
+  type: 'test'
+  ...
+# Subtest: all supported video domains parse consistently
+ok 9 - all supported video domains parse consistently
+  ---
+  duration_ms: 0.49814
+  type: 'test'
+  ...
+# Subtest: motion module exists as a shared, dependency-free policy
+ok 10 - motion module exists as a shared, dependency-free policy
+  ---
+  duration_ms: 1.360377
+  type: 'test'
+  ...
+# Subtest: critical spring at equilibrium remains at rest
+ok 11 - critical spring at equilibrium remains at rest
+  ---
+  duration_ms: 1.831366
+  type: 'test'
+  ...
+# Subtest: exact critical damping composes independently of frame rate
+ok 12 - exact critical damping composes independently of frame rate
+  ---
+  duration_ms: 0.28088
+  type: 'test'
+  ...
+# Subtest: spring retarget keeps velocity and reaches finite rest
+ok 13 - spring retarget keeps velocity and reaches finite rest
+  ---
+  duration_ms: 0.195909
+  type: 'test'
+  ...
+# Subtest: nonfinite inputs and invalid time are rejected
+ok 14 - nonfinite inputs and invalid time are rejected
+  ---
+  duration_ms: 0.492028
+  type: 'test'
+  ...
+# Subtest: stagger is bounded even for 150 results
+ok 15 - stagger is bounded even for 150 results
+  ---
+  duration_ms: 1.081831
+  type: 'test'
+  ...
+# Subtest: angles return by their shortest path
+ok 16 - angles return by their shortest path
+  ---
+  duration_ms: 0.267235
+  type: 'test'
+  ...
+# Subtest: animation cancellation resolves and cleans once
+ok 17 - animation cancellation resolves and cleans once
+  ---
+  duration_ms: 0.678972
+  type: 'test'
+  ...
+# Subtest: reduced route finishes synchronously without animate support
+ok 18 - reduced route finishes synchronously without animate support
+  ---
+  duration_ms: 0.64661
+  type: 'test'
+  ...
+# Subtest: reduced mode cancels an active drag to the canonical hand pose
+ok 19 - reduced mode cancels an active drag to the canonical hand pose
+  ---
+  duration_ms: 6.257216
+  type: 'test'
+  ...
+# Subtest: suspending a dragged record does not leave a displaced stable state
+ok 20 - suspending a dragged record does not leave a displaced stable state
+  ---
+  duration_ms: 3.250934
+  type: 'test'
+  ...
+1..20
+# tests 20
+# suites 0
+# pass 20
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 84.200747

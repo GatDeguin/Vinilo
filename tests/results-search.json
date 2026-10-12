@@ -1,0 +1,45 @@
+{
+  "suite": "search",
+  "mode": "opaque in-memory document",
+  "browser": "144.0.7559.96",
+  "results": [
+    {
+      "name": "missing API key opens configuration, no fake results",
+      "status": "passed"
+    },
+    {
+      "name": "search contract uses official endpoint and API key header",
+      "status": "passed"
+    },
+    {
+      "name": "untrusted API titles rendered as text, not HTML",
+      "status": "passed"
+    },
+    {
+      "name": "pagination follows nextPageToken",
+      "status": "passed"
+    },
+    {
+      "name": "quota errors are reported, never replaced with invented results",
+      "status": "passed"
+    },
+    {
+      "name": "forget key removes application credential",
+      "status": "passed"
+    },
+    {
+      "name": "host spoofing in pasted URLs rejected",
+      "status": "passed"
+    },
+    {
+      "name": "valid YouTube URL creates real video reference without key",
+      "status": "passed"
+    },
+    {
+      "name": "no uncaught exceptions in search flows",
+      "status": "passed"
+    }
+  ],
+  "uncaught_errors": [],
+  "note": "Export tests inspect the generated Blob and suppress the OS download click. Search responses are explicit test fixtures. No live YouTube API or playback validation is claimed."
+}

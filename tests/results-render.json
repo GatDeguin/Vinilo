@@ -1,0 +1,29 @@
+{
+  "suite": "render",
+  "mode": "opaque in-memory document",
+  "browser": "144.0.7559.96",
+  "results": [
+    {
+      "name": "WebGL2 programs compile and scene renders",
+      "status": "passed"
+    },
+    {
+      "name": "pointer drag moves record from hand to platter",
+      "status": "passed"
+    },
+    {
+      "name": "3D scene connected to actual audio playing state",
+      "status": "passed"
+    },
+    {
+      "name": "top-view camera changes scene",
+      "status": "passed"
+    },
+    {
+      "name": "no uncaught WebGL application exceptions",
+      "status": "passed"
+    }
+  ],
+  "uncaught_errors": [],
+  "note": "Export tests inspect the generated Blob and suppress the OS download click. Search responses are explicit test fixtures. No live YouTube API or playback validation is claimed."
+}

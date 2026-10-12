@@ -1,0 +1,77 @@
+{
+  "suite": "media",
+  "mode": "opaque in-memory document",
+  "browser": "144.0.7559.96",
+  "results": [
+    {
+      "name": "browser offline during all local media checks",
+      "status": "passed"
+    },
+    {
+      "name": "initial state has three real offline studies",
+      "status": "passed"
+    },
+    {
+      "name": "extract record",
+      "status": "passed"
+    },
+    {
+      "name": "mount record and decode bundled MP3",
+      "status": "passed"
+    },
+    {
+      "name": "real local media playback",
+      "status": "passed"
+    },
+    {
+      "name": "mute/unmute controls actual media",
+      "status": "passed"
+    },
+    {
+      "name": "volume controls actual media",
+      "status": "passed"
+    },
+    {
+      "name": "seek changes media time",
+      "status": "passed"
+    },
+    {
+      "name": "pause from primary control",
+      "status": "passed"
+    },
+    {
+      "name": "eject stops playback and resets physical state",
+      "status": "passed"
+    },
+    {
+      "name": "import and play a real local MP3",
+      "status": "passed"
+    },
+    {
+      "name": "unavailable storage warning survives successful media import",
+      "status": "passed"
+    },
+    {
+      "name": "portable JSON export contains actual local audio bytes",
+      "status": "passed"
+    },
+    {
+      "name": "corrupt JSON backup rejected",
+      "status": "passed"
+    },
+    {
+      "name": "portable backup restores collection in a fresh document",
+      "status": "passed"
+    },
+    {
+      "name": "restored local audio decodes and plays offline",
+      "status": "passed"
+    },
+    {
+      "name": "no uncaught application exceptions",
+      "status": "passed"
+    }
+  ],
+  "uncaught_errors": [],
+  "note": "Export tests inspect the generated Blob and suppress the OS download click. Search responses are explicit test fixtures. No live YouTube API or playback validation is claimed."
+}

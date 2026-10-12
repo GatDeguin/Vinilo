@@ -1,0 +1,25 @@
+{
+  "suite": "motion",
+  "mode": "opaque in-memory document",
+  "browser": "144.0.7559.96",
+  "results": [
+    {
+      "name": "full-motion extract, mount and play complete without blocking controls",
+      "status": "passed"
+    },
+    {
+      "name": "playing scene pixels change over time with motion enabled",
+      "status": "passed"
+    },
+    {
+      "name": "GPU context loss shows fallback while actual audio continues",
+      "status": "passed"
+    },
+    {
+      "name": "no uncaught exceptions during animation and GPU loss",
+      "status": "passed"
+    }
+  ],
+  "uncaught_errors": [],
+  "note": "Export tests inspect the generated Blob and suppress the OS download click. Search responses are explicit test fixtures. No live YouTube API or playback validation is claimed."
+}

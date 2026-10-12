@@ -1,0 +1,29 @@
+{
+  "suite": "mobile",
+  "mode": "opaque in-memory document",
+  "browser": "144.0.7559.96",
+  "results": [
+    {
+      "name": "real WebGL2 scene in mobile-size Chromium viewport",
+      "status": "passed"
+    },
+    {
+      "name": "390px viewport has no horizontal page overflow",
+      "status": "passed"
+    },
+    {
+      "name": "system reduced-motion preference applied",
+      "status": "passed"
+    },
+    {
+      "name": "help dialog opens and Escape dismisses with native focus handling",
+      "status": "passed"
+    },
+    {
+      "name": "no uncaught mobile-layout exceptions",
+      "status": "passed"
+    }
+  ],
+  "uncaught_errors": [],
+  "note": "Export tests inspect the generated Blob and suppress the OS download click. Search responses are explicit test fixtures. No live YouTube API or playback validation is claimed."
+}

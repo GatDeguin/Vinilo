@@ -1,0 +1,15 @@
+const test=require('node:test'),assert=require('node:assert/strict');
+const fs=require('node:fs');
+test('motion module exists as a shared, dependency-free policy',()=>assert.ok(fs.existsSync(__dirname+'/../src/motion.js')));
+const load=()=>require('../src/motion.js');
+test('critical spring at equilibrium remains at rest',()=>assert.deepEqual(load().spring(2,0,2,18,.5),[2,0]));
+test('exact critical damping composes independently of frame rate',()=>{const M=load(),one=M.spring(0,.2,1,18,.04),a=M.spring(0,.2,1,18,.01),b=M.spring(...a,1,18,.03);one.forEach((x,i)=>assert.ok(Math.abs(x-b[i])<1e-12));});
+test('spring retarget keeps velocity and reaches finite rest',()=>{const M=load();let [x,v]=M.spring(0,0,1,18,.1);assert.ok(v>0);[x,v]=M.spring(x,v,-.5,18,.001);assert.ok(v>0);[x,v]=M.spring(x,v,-.5,18,10);assert.ok(Math.abs(x+.5)<1e-9&&Math.abs(v)<1e-9);});
+test('nonfinite inputs and invalid time are rejected',()=>{const m=load();assert.throws(()=>m.spring(NaN,0,0,1,1),RangeError);assert.throws(()=>m.spring(0,0,0,1,-1),RangeError);});
+test('stagger is bounded even for 150 results',()=>{const m=load();assert.equal(m.delay(0),0);assert.equal(m.delay(149),150);});
+test('angles return by their shortest path',()=>{const m=load();assert.ok(Math.abs(m.nearestAngle(20*Math.PI+.2,0)-(20*Math.PI))<1e-10);});
+test('animation cancellation resolves and cleans once',async()=>{const {Director}=load();const d=new Director();let reject,clean=0;const el={animate:()=>({finished:new Promise((a,b)=>reject=b),cancel(){reject(Object.assign(Error('cancel'),{name:'AbortError'}));}})};const p=d.run('cover',el,[{opacity:0},{opacity:1}],{duration:200},()=>clean++);d.cancel('cover');assert.equal(await p,'cancelled');assert.equal(clean,1);assert.equal(d.active.size,0);});
+test('reduced route finishes synchronously without animate support',async()=>{const {Director}=load();const d=new Director({reduced:true});let cleaned=0;assert.equal(await d.run('test',{},[],{},()=>cleaned++),'skipped');assert.equal(cleaned,1);assert.equal(d.active.size,0);});
+function draggedStudio(){const vm=require('node:vm'),context={SurcoMotion:load(),performance,cancelAnimationFrame(){}};vm.createContext(context);vm.runInContext(fs.readFileSync(__dirname+'/../src/render.js','utf8')+';globalThis.Studio=SurcoStudio',context);const studio=Object.create(context.Studio.prototype);Object.assign(studio,{motion:null,recordSpring:null,drag:{id:1},down:null,record:{p:[-2,3.1,.9],r:[1.1,0,-.18]},stage:'extracted',top:false,camYaw:.34,canvas:{style:{},hasPointerCapture(){return true},releasePointerCapture(){}},wake(){}});return studio;}
+test('reduced mode cancels an active drag to the canonical hand pose',()=>{const s=draggedStudio();s.setReduced(true);assert.equal(s.drag,null);assert.equal(JSON.stringify(s.record.p),JSON.stringify([-3.35,2.90,1.05]));});
+test('suspending a dragged record does not leave a displaced stable state',()=>{const s=draggedStudio();s.suspend();assert.equal(s.drag,null);assert.equal(JSON.stringify(s.record.p),JSON.stringify([-3.35,2.90,1.05]));});

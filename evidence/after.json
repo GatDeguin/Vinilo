@@ -1,0 +1,114 @@
+{
+  "mode": "after",
+  "browser": "144.0.7559.96",
+  "viewport": "1280x960",
+  "gpu": "SwiftShader software, headed Chromium under Xvfb",
+  "origin": "opaque set_content; HTTP blocked by browser administrator",
+  "errors": [],
+  "tests": [
+    {
+      "name": "no persistent RAF callbacks at idle",
+      "status": "pass"
+    },
+    {
+      "name": "second valid intent mounts immediately without animation lock",
+      "status": "pass"
+    },
+    {
+      "name": "switch to reduced motion settles an in-flight transition",
+      "status": "pass"
+    },
+    {
+      "name": "system motion preference changes in both directions",
+      "status": "pass"
+    },
+    {
+      "name": "selection preserves card DOM identity and keyboard focus",
+      "status": "pass"
+    },
+    {
+      "name": "20 overlapping stage/selection/dialog cycles clean up",
+      "status": "pass"
+    },
+    {
+      "name": "selecting the same record does not reset prepared media",
+      "status": "pass"
+    },
+    {
+      "name": "camera reversal and reduction reach the last requested view",
+      "status": "pass"
+    },
+    {
+      "name": "manual setting cannot override system reduced motion",
+      "status": "pass"
+    },
+    {
+      "name": "Escape closes modal and restores focus to its opener",
+      "status": "pass"
+    },
+    {
+      "name": "offline playback works with all motion reduced",
+      "status": "pass"
+    },
+    {
+      "name": "reduction during a live pointer drag returns to stable hand position",
+      "status": "pass"
+    },
+    {
+      "name": "resize mid-transfer preserves stage and mobile layout",
+      "status": "pass"
+    },
+    {
+      "name": "no lingering RAF after stress, playback and resize",
+      "status": "pass"
+    },
+    {
+      "name": "no uncaught application errors across the suite",
+      "status": "pass"
+    }
+  ],
+  "idle": {
+    "callbacks": 0,
+    "pending": 0,
+    "windowSeconds": 1.208
+  },
+  "snapshot": {
+    "selected": {
+      "kind": "demo",
+      "id": "luz-de-tarde",
+      "title": "Luz de tarde",
+      "artist": "Estudio SURCO · jazz de sobremesa",
+      "addedAt": 1791769597278,
+      "fetchedAt": 1791769597278,
+      "art": 0
+    },
+    "stage": "sleeved",
+    "playing": false,
+    "ready": false,
+    "busy": false,
+    "tab": "studio",
+    "saved": 0,
+    "results": 0,
+    "current": 0,
+    "duration": 0,
+    "apiConnected": false,
+    "renderer": "WebGL2",
+    "drawCalls": 58,
+    "reduced": false,
+    "motion": {
+      "recordPosition": [
+        -4.47,
+        1.85,
+        -0.89
+      ],
+      "recordActive": false,
+      "cameraActive": false,
+      "domActive": 0,
+      "clones": 0,
+      "rendererPending": false,
+      "scopePending": false,
+      "frames": 72,
+      "callbacks": 72
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "browser": "144.0.7559.96",
+  "results": [
+    "shared sleeve midpoint: real DOM animation, inert and aria-hidden",
+    "extract cancels paused sleeve-transfer clone and restores real sleeve",
+    "actual local audio and real WebGL playing screenshot",
+    "GPU context loss leaves real local audio playing",
+    "GPU restoration: canvas listener count remains 8, no duplicated handlers",
+    "no uncaught errors or pending renderer after pause"
+  ],
+  "errors": []
+}
