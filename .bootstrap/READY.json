@@ -1,0 +1,7 @@
+{
+  "parts": ["part-00.b64", "part-01.b64", "part-02.b64", "part-03.b64", "part-04.b64", "part-05.b64", "part-06.b64", "part-07.b64", "part-08.b64", "part-09.b64", "part-10.b64"],
+  "sha256": "0d6bec605573682c49403f1c8d30c364a7842d331525e87814f11e90d098c356",
+  "files": 26,
+  "format": "lzma-base64-json-utf8",
+  "source_html_sha256": "60583bc04ae8d58c7a0f078daaf592bb270658277e13a7d077224bc50f42ed2c"
+}
