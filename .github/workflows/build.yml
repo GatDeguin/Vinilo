@@ -1,0 +1,112 @@
+name: Build and verify SURCO
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.bootstrap/READY.json'
+      - 'src/**'
+      - 'assets/**'
+      - 'build.py'
+      - 'tests/*.cjs'
+      - 'tests/static_checks.py'
+      - '.github/workflows/build.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: surco-build-main
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - name: Recover verified source package when present
+        id: source
+        shell: python
+        run: |
+          import os, json, hashlib, base64, lzma, pathlib, shutil
+          root = pathlib.Path.cwd()
+          ready = root / '.bootstrap/READY.json'
+          if ready.exists():
+              manifest = json.loads(ready.read_text())
+              parts = manifest['parts']
+              if not isinstance(parts, list) or not 1 <= len(parts) <= 30:
+                  raise ValueError('Invalid source part count')
+              encoded = ''
+              for name in parts:
+                  if not isinstance(name, str) or not name.startswith('part-') or '/' in name or '..' in name:
+                      raise ValueError('Invalid source part name')
+                  encoded += (root / '.bootstrap' / name).read_text().strip()
+              raw = lzma.decompress(base64.b64decode(encoded, validate=True))
+              if hashlib.sha256(raw).hexdigest() != manifest['sha256']:
+                  raise ValueError('Source package integrity check failed')
+              files = json.loads(raw)
+              for name, text in files.items():
+                  path = pathlib.PurePosixPath(name)
+                  if path.is_absolute() or '..' in path.parts or not path.parts or path.parts[0].startswith('.'):
+                      raise ValueError('Unsafe source path')
+                  if not isinstance(text, str):
+                      raise ValueError('Source must be UTF-8 text')
+                  target = root / path
+                  target.parent.mkdir(parents=True, exist_ok=True)
+                  target.write_text(text, encoding='utf-8')
+              shutil.rmtree(root / '.bootstrap')
+          has_sources = (root / 'src/app.js').is_file()
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              output.write('ready=' + str(has_sources).lower() + '\n')
+          if not has_sources:
+              print('Waiting for the verified source package; no app has been built yet.')
+      - uses: actions/setup-python@v5
+        if: steps.source.outputs.ready == 'true'
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v4
+        if: steps.source.outputs.ready == 'true'
+        with:
+          node-version: '22'
+      - name: Generate the three original local recordings if absent
+        if: steps.source.outputs.ready == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ ! -s assets/luz-de-tarde.mp3 ] || [ ! -s assets/hora-azul.mp3 ] || [ ! -s assets/orbita.mp3 ]; then
+            python -m pip install numpy==2.3.5
+            if ! command -v ffmpeg >/dev/null; then sudo apt-get update && sudo apt-get install -y ffmpeg; fi
+            python assets/generate_audio.py
+          fi
+      - name: Build the self-contained HTML and execute tests
+        if: steps.source.outputs.ready == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p evidence
+          node --test tests/core.test.cjs tests/motion.test.cjs | tee evidence/ci-unit-results.txt
+          python build.py
+          python tests/static_checks.py | tee evidence/ci-static-results.txt
+          python -c "import json,pathlib; p=pathlib.Path('tests/static-results.json'); pathlib.Path('evidence/ci-integrity.json').write_text(p.read_text())"
+      - name: Commit generated application and unpacked sources
+        if: steps.source.outputs.ready == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m 'build: publish verified SURCO HTML and editable sources'
+            git push origin HEAD:main
+          fi
+      - uses: actions/upload-artifact@v4
+        if: steps.source.outputs.ready == 'true'
+        with:
+          name: surco-self-contained
+          path: |
+            index.html
+            evidence/ci-*.txt
+            evidence/ci-integrity.json
